@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Support\AnnualReturnReminderDate;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AnnualReturnReminderService
 {
@@ -79,11 +80,12 @@ class AnnualReturnReminderService
     public function buildBody(Company $company): string
     {
         $template = file_get_contents(resource_path('templates/annual_return_reminder.txt'));
+        $companyName = html_entity_decode($company->company_name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         return str_replace(
             ['<COMPANY NAME>', '<DD/MM/YYYY'],
             [
-                $company->company_name,
+                Str::of($companyName)->squish()->value(),
                 $company->incorporation_date->format('d/m/Y'),
             ],
             $template,

@@ -3,15 +3,25 @@
 namespace App\Console\Commands;
 
 use App\Services\AnnualReturnReminderService;
-use Illuminate\Console\Attributes\Description;
-use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 
-#[Signature('reminders:send-annual-return {--date=}')]
-#[Description('Send annual return reminder emails due on the selected date.')]
 class SendAnnualReturnReminders extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'reminders:send-annual-return {--date=}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Send annual return reminder emails due on the selected date.';
+
     public function handle(AnnualReturnReminderService $reminderService): int
     {
         $date = $this->option('date')

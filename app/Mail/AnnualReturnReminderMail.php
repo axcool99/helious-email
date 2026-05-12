@@ -28,9 +28,11 @@ class AnnualReturnReminderMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            text: 'emails.annual_return_reminder',
+            view: 'emails.annual_return_reminder',
+            text: 'emails.annual_return_reminder_text',
             with: [
                 'body' => $this->body,
+                'mailSubject' => $this->mailSubject,
             ],
         );
     }

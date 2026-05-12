@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Support\AnnualReturnReminderDate;
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -61,10 +60,9 @@ class Company extends Model
         return $this->hasMany(ReminderLog::class);
     }
 
-    #[Scope]
-    protected function sourceType(Builder $query, string $sourceType): void
+    public function scopeSourceType(Builder $query, string $sourceType): Builder
     {
-        $query->where('source_type', $sourceType);
+        return $query->where('source_type', $sourceType);
     }
 
     public function syncReminderSchedule(?Carbon $referenceDate = null): void
